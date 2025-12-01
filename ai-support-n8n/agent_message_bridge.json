@@ -1,0 +1,117 @@
+{
+  "name": "Agent Message Bridge",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "agent-console-bridge",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "agent-message-webhook",
+      "name": "Agent Message Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 400],
+      "webhookId": "agent-console-bridge"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM sessions WHERE id = '{{ $json.body.session_id }}'::uuid;",
+        "options": {}
+      },
+      "id": "get-session",
+      "name": "Get Session Info",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2,
+      "position": [460, 400],
+      "credentials": {
+        "postgres": {
+          "id": "supabase-postgres",
+          "name": "Supabase PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT log_event(\n  '{{ $json.body.session_id }}'::uuid,\n  'agent_message',\n  'agent',\n  '{{ $json.body.message }}',\n  '{\"agent_id\": \"{{ $json.body.agent_id }}\"}'::jsonb\n);",
+        "options": {}
+      },
+      "id": "log-agent-message",
+      "name": "Log Agent Message",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2,
+      "position": [680, 400],
+      "credentials": {
+        "postgres": {
+          "id": "supabase-postgres",
+          "name": "Supabase PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare agent message for delivery\nconst session = $('Get Session Info').first().json;\nconst agentMsg = $('Agent Message Webhook').first().json.body;\n\nreturn {\n  session_id: agentMsg.session_id,\n  channel: session.channel,\n  user_id: session.user_id,\n  bot_response: agentMsg.message,\n  response_type: 'agent_message',\n  agent_id: agentMsg.agent_id\n};"
+      },
+      "id": "prepare-delivery",
+      "name": "Prepare for Delivery",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 400]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.N8N_WEBHOOK_BASE }}/outbound-sender",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=",
+              "value": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "send-to-user",
+      "name": "Send to User",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1120, 400]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true, \"delivered\": true } }}"
+      },
+      "id": "respond",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1340, 400]
+    }
+  ],
+  "connections": {
+    "Agent Message Webhook": {
+      "main": [[{ "node": "Get Session Info", "type": "main", "index": 0 }]]
+    },
+    "Get Session Info": {
+      "main": [[{ "node": "Log Agent Message", "type": "main", "index": 0 }]]
+    },
+    "Log Agent Message": {
+      "main": [[{ "node": "Prepare for Delivery", "type": "main", "index": 0 }]]
+    },
+    "Prepare for Delivery": {
+      "main": [[{ "node": "Send to User", "type": "main", "index": 0 }]]
+    },
+    "Send to User": {
+      "main": [[{ "node": "Respond", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

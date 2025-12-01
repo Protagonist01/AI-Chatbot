@@ -1,0 +1,337 @@
+{
+  "name": "Category Selector",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "category-selector",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "category-webhook",
+      "name": "Category Selector Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        240,
+        400
+      ],
+      "webhookId": "category-selector"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Check if user sent a number (category selection)\nconst message = $json.body.message.trim();\nconst categoryNumber = parseInt(message);\n\nconst categoryMap = {\n  1: 'product_questions',\n  2: 'orders_tracking',\n  3: 'returns_exchanges',\n  4: 'payments_billing',\n  5: 'sizing',\n  6: 'account_security',\n  7: 'promotions_discounts',\n  8: 'human_agent'\n};\n\nif (categoryNumber >= 1 && categoryNumber <= 8) {\n  return {\n    ...($json.body),\n    is_category_selection: true,\n    selected_category: categoryMap[categoryNumber],\n    category_number: categoryNumber\n  };\n} else {\n  return {\n    ...($json.body),\n    is_category_selection: false,\n    show_menu: true\n  };\n}"
+      },
+      "id": "check-if-category-selection",
+      "name": "Check If Category Selection",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.is_category_selection }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "is-valid-category",
+      "name": "Is Valid Category",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        680,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT set_session_category(\n  '{{ $json.session_id }}'::uuid,\n  '{{ $json.selected_category }}'\n);",
+        "options": {}
+      },
+      "id": "save-category",
+      "name": "Save Category Selection",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2,
+      "position": [
+        900,
+        300
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "supabase-postgres",
+          "name": "Supabase PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Category 8 = direct escalation to human\nif ($json.category_number === 8) {\n  return {\n    ...$json,\n    escalate_immediately: true,\n    escalation_reason: 'User requested human agent'\n  };\n} else {\n  return {\n    ...$json,\n    escalate_immediately: false,\n    proceed_to_ai: true\n  };\n}"
+      },
+      "id": "check-human-request",
+      "name": "Check Human Agent Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.escalate_immediately }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "should-escalate",
+      "name": "Should Escalate",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.N8N_WEBHOOK_BASE }}/escalation-handler",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=",
+              "value": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "escalate-to-human",
+      "name": "Escalate to Human",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        1560,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.N8N_WEBHOOK_BASE }}/router",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=",
+              "value": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "route-to-ai",
+      "name": "Route to AI",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        1560,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build category menu message\nconst menu = `👋 Welcome to Urban Threads! I'm your shopping assistant. I can help you find products, check stock, track orders, apply discounts, and answer any questions. What are you looking for today?\n\nPlease select a category:`;\n\nconst telegramMarkup = {\n  inline_keyboard: [\n    [{ text: \"🛍️ Product Questions\", callback_data: \"1\" }],\n    [{ text: \"📦 Orders & Tracking\", callback_data: \"2\" }],\n    [{ text: \"↩️ Returns & Exchanges\", callback_data: \"3\" }],\n    [{ text: \"💳 Payments & Billing\", callback_data: \"4\" }],\n    [{ text: \"📏 Sizing & Fit\", callback_data: \"5\" }],\n    [{ text: \"👤 Account & Security\", callback_data: \"6\" }],\n    [{ text: \"🎉 Promotions & Discounts\", callback_data: \"7\" }],\n    [{ text: \"👨‍💼 Talk to a Human Agent\", callback_data: \"8\" }]\n  ]\n};\n\nconst whatsappInteractive = {\n  type: \"list\",\n  header: {\n    type: \"text\",\n    text: \"Welcome to Urban Threads\"\n  },\n  body: {\n    text: \"I'm your shopping assistant. How can I help you today?\"\n  },\n  footer: {\n    text: \"Select an option below\"\n  },\n  action: {\n    button: \"Select Category\",\n    sections: [\n      {\n        title: \"Support Categories\",\n        rows: [\n          { id: \"1\", title: \"Product Questions\", description: \"Stock, specs, care info\" },\n          { id: \"2\", title: \"Orders & Tracking\", description: \"Status, shipping, delays\" },\n          { id: \"3\", title: \"Returns & Exchanges\", description: \"Policy, process return\" },\n          { id: \"4\", title: \"Payments & Billing\", description: \"Methods, invoices\" },\n          { id: \"5\", title: \"Sizing & Fit\", description: \"Guides, measurements\" },\n          { id: \"6\", title: \"Account & Security\", description: \"Login, profile, privacy\" },\n          { id: \"7\", title: \"Promotions\", description: \"Discounts, sales, codes\" },\n          { id: \"8\", title: \"Human Agent\", description: \"Talk to a real person\" }\n        ]\n      }\n    ]\n  }\n};\n\nreturn {\n  ...$json,\n  bot_response: menu,\n  response_type: 'category_menu',\n  telegram_reply_markup: telegramMarkup,\n  whatsapp_interactive: whatsappInteractive\n};"
+      },
+      "id": "build-menu",
+      "name": "Build Category Menu",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.N8N_WEBHOOK_BASE }}/outbound-sender",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=",
+              "value": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "send-menu",
+      "name": "Send Menu to User",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        1120,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true } }}"
+      },
+      "id": "respond",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        400
+      ]
+    }
+  ],
+  "connections": {
+    "Category Selector Webhook": {
+      "main": [
+        [
+          {
+            "node": "Check If Category Selection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check If Category Selection": {
+      "main": [
+        [
+          {
+            "node": "Is Valid Category",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Valid Category": {
+      "main": [
+        [
+          {
+            "node": "Save Category Selection",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Category Menu",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Category Selection": {
+      "main": [
+        [
+          {
+            "node": "Check Human Agent Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Human Agent Request": {
+      "main": [
+        [
+          {
+            "node": "Should Escalate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Should Escalate": {
+      "main": [
+        [
+          {
+            "node": "Escalate to Human",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Route to AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Escalate to Human": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route to AI": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Category Menu": {
+      "main": [
+        [
+          {
+            "node": "Send Menu to User",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Menu to User": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

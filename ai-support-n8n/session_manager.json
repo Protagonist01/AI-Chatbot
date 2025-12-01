@@ -1,0 +1,164 @@
+{
+  "name": "Session Manager",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "session-manager",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "session-webhook",
+      "name": "Session Manager Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 400],
+      "webhookId": "session-manager"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM create_or_get_session(\n  '{{ $json.body.channel }}',\n  '{{ $json.body.user_id }}',\n  '{{ $json.body.user_name }}'\n);",
+        "options": {}
+      },
+      "id": "create-or-get-session",
+      "name": "Create or Get Session",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2,
+      "position": [460, 400],
+      "credentials": {
+        "postgres": {
+          "id": "supabase-postgres",
+          "name": "Supabase PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT log_event(\n  '{{ $json.session_id }}'::uuid,\n  'user_message',\n  'user',\n  '{{ $json.message }}',\n  '{}'::jsonb\n);",
+        "options": {}
+      },
+      "id": "log-user-message",
+      "name": "Log User Message",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2,
+      "position": [680, 400],
+      "credentials": {
+        "postgres": {
+          "id": "supabase-postgres",
+          "name": "Supabase PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Combine session data with incoming message\nconst session = $input.first().json;\nconst inbound = $('Session Manager Webhook').first().json.body;\n\nreturn {\n  session_id: session.session_id,\n  user_id: session.user_id,\n  selected_category: session.selected_category,\n  status: session.status,\n  channel: inbound.channel,\n  message: inbound.message,\n  user_name: inbound.user_name,\n  needs_category_selection: !session.selected_category\n};"
+      },
+      "id": "prepare-routing-data",
+      "name": "Prepare Routing Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 400]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.needs_category_selection }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "check-category-selected",
+      "name": "Check Category Selected",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [1120, 400]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.N8N_WEBHOOK_BASE }}/category-selector",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=",
+              "value": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "route-to-category-selector",
+      "name": "Route to Category Selector",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1340, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.N8N_WEBHOOK_BASE }}/router",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=",
+              "value": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "route-to-router",
+      "name": "Route to Router",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1340, 500]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true } }}"
+      },
+      "id": "respond",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1560, 400]
+    }
+  ],
+  "connections": {
+    "Session Manager Webhook": {
+      "main": [[{ "node": "Create or Get Session", "type": "main", "index": 0 }]]
+    },
+    "Create or Get Session": {
+      "main": [[{ "node": "Log User Message", "type": "main", "index": 0 }]]
+    },
+    "Log User Message": {
+      "main": [[{ "node": "Prepare Routing Data", "type": "main", "index": 0 }]]
+    },
+    "Prepare Routing Data": {
+      "main": [[{ "node": "Check Category Selected", "type": "main", "index": 0 }]]
+    },
+    "Check Category Selected": {
+      "main": [
+        [{ "node": "Route to Category Selector", "type": "main", "index": 0 }],
+        [{ "node": "Route to Router", "type": "main", "index": 0 }]
+      ]
+    },
+    "Route to Category Selector": {
+      "main": [[{ "node": "Respond", "type": "main", "index": 0 }]]
+    },
+    "Route to Router": {
+      "main": [[{ "node": "Respond", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

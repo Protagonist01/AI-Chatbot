@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Urban Threads - Demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.2.0",
+        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+        "lucide-react": "https://esm.sh/lucide-react@0.263.1"
+      }
+    }
+    </script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    /* Custom scrollbar for chat */
+    .overflow-y-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .overflow-y-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .overflow-y-scroll::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.1);
+      border-radius: 3px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" data-type="module">
+    import React, { useState, useEffect, useRef } from 'react';
+    import { createRoot } from 'react-dom/client';
+    import { MessageCircle, X, Send, ShoppingCart, Heart, Search, Menu, Star, Truck, Shield, ArrowRight, ChevronDown, Filter, User } from 'lucide-react';
+
+    // Generate a random session ID
+    const generateSessionId = () => {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    };
+
+    const SESSION_ID = generateSessionId();
+    const API_BASE_URL = 'http://localhost:8000';
+    const WS_BASE_URL = 'ws://localhost:8000';
+
+    function ShopifyDemo() {
+      const [chatOpen, setChatOpen] = useState(false);
+      const [messages, setMessages] = useState([
+        <div className="bg-black text-white text-center py-2 text-sm">
+          🎉 FLASH SALE: Extra 20% OFF Everything | Use Code: <span className="font-bold">SAVE20</span> | Free Shipping Over $50
+        </div>
+
+          {/* Header */ }
+        < header className = "bg-white shadow-sm sticky top-0 z-40" >
+        <div className="max-w-7xl mx-auto px-4">
+          {/* Top Header */}
+          <div className="flex items-center justify-between py-4">
+            <div className="flex items-center space-x-2">
+              <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-2 rounded-lg">
+                <ShoppingCart className="w-6 h-6" />
+              </div>
+              <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                Urban Threads
+              </span>
+            </div>
+
+            {/* Search Bar */}
+            <div className="hidden md:flex flex-1 max-w-xl mx-8">
+              <div className="relative w-full">
+                <input type="text" placeholder="Search for products, brands, and more..."
+                  className="w-full border border-gray-300 rounded-lg pl-4 pr-10 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600" />
+                <Search className="absolute right-3 top-2.5 w-5 h-5 text-gray-400" />
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex items-center space-x-6">
+              <User className="w-6 h-6 text-gray-600 cursor-pointer hover:text-purple-600" />
+              <Heart className="w-6 h-6 text-gray-600 cursor-pointer hover:text-pink-600" />
+              <div className="relative cursor-pointer">
+                <ShoppingCart className="w-6 h-6 text-gray-600 hover:text-purple-600" />
+                <span className="absolute -top-2 -right-2 bg-pink-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                  {cartCount}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Navigation */}
+          <nav className="border-t py-3">
+            <div className="flex items-center justify-between">
+              <div className="flex space-x-8">
+                <a href="#" className="text-gray-700 hover:text-purple-600 font-medium">New Arrivals</a>
+                <a href="#" className="text-gray-700 hover:text-purple-600 font-medium">Men</a>
+                <a href="#" className="text-gray-700 hover:text-purple-600 font-medium">Women</a>
+                <a href="#" className="text-gray-700 hover:text-purple-600 font-medium">Accessories</a>
+                <a href="#" className="text-red-600 hover:text-red-700 font-bold">Sale 🔥</a>
+              </div>
+              <div className="flex items-center space-x-2 text-sm text-gray-600">
+                <Truck className="w-4 h-4" />
+                <span>Free Shipping Over $50</span>
+              </div>
+            </div>
+          </nav>
+        </div>
+          </header >
+
+        {/* Hero Section */ }
+        < section className = "bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 text-white py-16" >
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div>
+                <h1 className="text-5xl font-bold mb-4">Winter Collection 2024</h1>
+                <p className="text-xl mb-6 text-purple-100">Up to 40% OFF on all winter essentials</p>
+                <div className="flex space-x-4">
+                  <button className="bg-white text-purple-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 flex items-center">
+                    Shop Now
+                    <ArrowRight className="ml-2 w-5 h-5" />
+                  </button>
+                  <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-purple-600">
+                    View Lookbook
+                  </button>
+                </div>
+              </div>
+              <div className="text-6xl text-center">
+                🛍️
+              </div>
+            </div>
+          </div>
+          </section >
+
+        {/* Trust Badges */ }
+        < section className = "py-8 bg-white border-b" >
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="flex items-center space-x-3">
+                <Truck className="w-8 h-8 text-purple-600" />
+                <div>
+                  <div className="font-semibold text-sm">Free Shipping</div>
+                  <div className="text-xs text-gray-600">On orders over $50</div>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Shield className="w-8 h-8 text-purple-600" />
+                <div>
+                  <div className="font-semibold text-sm">Secure Payment</div>
+                  <div className="text-xs text-gray-600">100% protected</div>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <ArrowRight className="w-8 h-8 text-purple-600" />
+                <div>
+                  <div className="font-semibold text-sm">Easy Returns</div>
+                  <div className="text-xs text-gray-600">30-day policy</div>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <MessageCircle className="w-8 h-8 text-purple-600" />
+                <div>
+                  <div className="font-semibold text-sm">24/7 Support</div>
+                  <div className="text-xs text-gray-600">AI-powered chat</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </section >
+
+        {/* Products Section */ }
+        < section className = "py-12 max-w-7xl mx-auto px-4" >
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-3xl font-bold">Trending Now</h2>
+              <button className="flex items-center space-x-2 text-purple-600 font-semibold hover:text-purple-700">
+                <Filter className="w-5 h-5" />
+                <span>Filter & Sort</span>
+                <ChevronDown className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {products.map((product) => (
+                <div key={product.id} className="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all group cursor-pointer overflow-hidden">
+                  <div className="relative">
+                    <div className={`${product.color} h-64 flex items-center justify-center text-7xl group-hover:scale-110 transition-transform`}>
+                      {product.image}
+                    </div>
+                    {product.badge && (
+                      <span className="absolute top-3 left-3 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold">
+                        {product.badge}
+                      </span>
+                    )}
+                    <button className="absolute top-3 right-3 bg-white p-2 rounded-full shadow-md hover:bg-pink-50">
+                      <Heart className="w-5 h-5 text-gray-600 hover:text-pink-600" />
+                    </button>
+                  </div>
+
+                  <div className="p-5">
+                    <h3 className="font-semibold text-lg mb-2 group-hover:text-purple-600">{product.name}</h3>
+                    <div className="flex items-center mb-3">
+                      <div className="flex items-center">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                        ))}
+                      </div>
+                      <span className="ml-2 text-sm text-gray-600">
+                        {product.rating} ({product.reviews})
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="text-2xl font-bold text-gray-900">${product.price}</span>
+                        {product.oldPrice && (
+                          <span className="ml-2 text-sm text-gray-500 line-through">${product.oldPrice}</span>
+                        )}
+                      </div>
+                      <button className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 font-medium text-sm">
+                        Add to Cart
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center mt-10">
+              <button className="bg-gray-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-800">
+                Load More Products
+              </button>
+            </div>
+          </section >
+
+        {/* Newsletter */ }
+        < section className = "bg-gradient-to-r from-purple-600 to-pink-600 text-white py-12" >
+          <div className="max-w-3xl mx-auto px-4 text-center">
+            <h2 className="text-3xl font-bold mb-4">Get 10% Off Your First Order</h2>
+            <p className="text-purple-100 mb-6">Subscribe to our newsletter for exclusive deals and new arrivals</p>
+            <div className="flex max-w-md mx-auto">
+              <input type="email" placeholder="Enter your email"
+                className="flex-1 px-4 py-3 rounded-l-lg text-gray-900 focus:outline-none" />
+              <button className="bg-gray-900 text-white px-6 py-3 rounded-r-lg font-semibold hover:bg-gray-800">
+                Subscribe
+              </button>
+            </div>
+          </div>
+          </section >
+
+        {/* Footer */ }
+        < footer className = "bg-gray-900 text-white py-12" >
+            <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-4 gap-8">
+              <div>
+                <h3 className="font-bold text-lg mb-4">Urban Threads</h3>
+                <p className="text-gray-400 text-sm">Your destination for trendy, quality fashion at affordable prices.</p>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-3">Shop</h4>
+                <ul className="space-y-2 text-sm text-gray-400">
+                  <li>New Arrivals</li>
+                  <li>Men's Collection</li>
+                  <li>Women's Collection</li>
+                  <li>Sale Items</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-3">Support</h4>
+                <ul className="space-y-2 text-sm text-gray-400">
+                  <li>Track Order</li>
+                  <li>Returns & Exchanges</li>
+                  <li>Shipping Info</li>
+                  <li>Size Guide</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-3">Connect</h4>
+                <p className="text-sm text-gray-400 mb-3">Chat: Available 24/7</p>
+                <p className="text-sm text-gray-400">Email: support@urbanthreads.com</p>
+              </div>
+            </div>
+            <div className="max-w-7xl mx-auto px-4 mt-8 pt-8 border-t border-gray-800 text-center text-sm text-gray-400">
+              <p>© 2024 Urban Threads. All rights reserved. | WhatsApp • Telegram • Instagram • Web Chat Available</p>
+            </div>
+          </footer >
+
+        {/* Chat Button with Notification Badge */ }
+      {
+        !chatOpen && (
+          <div className="fixed bottom-6 right-6 z-50">
+            <div className="relative">
+              <button onClick={() => setChatOpen(true)}
+                className="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 rounded-full shadow-2xl hover:shadow-purple-500/50 transition-all hover:scale-110 animate-pulse"
+              >
+                <MessageCircle className="w-7 h-7" />
+              </button>
+              <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center font-bold animate-bounce">
+                1
+              </span>
+            </div>
+          </div>
+        )
+      }
+
+      {/* Chat Widget */ }
+      {
+        chatOpen && (
+          <div className="fixed bottom-6 right-6 w-96 h-[600px] bg-white rounded-2xl shadow-2xl flex flex-col z-50 border border-gray-200">
+            {/* Chat Header */}
+            <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 rounded-t-2xl flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md">
+                  <ShoppingCart className="w-6 h-6 text-purple-600" />
+                </div>
+                <div>
+                  <h3 className="font-bold">Shopping Assistant</h3>
+                  <p className="text-xs text-purple-100 flex items-center">
+                    <span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
+                    Online now
+                  </p>
+                </div>
+              </div>
+              <button onClick={() => setChatOpen(false)} className="hover:bg-white/20 rounded-lg p-1.5 transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Messages */}
+            <div className="flex-1 overflow-y-scroll p-4 space-y-4 bg-gradient-to-b from-gray-50 to-white">
+              {messages.map((msg, idx) => (
+                <div key={idx} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[85%] p-3 rounded-2xl whitespace-pre-line shadow-sm ${msg.type === 'user'
+                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-br-none'
+                    : msg.type === 'system' ? 'bg-yellow-50 border border-yellow-200 text-yellow-800 text-center w-full'
+                      : 'bg-white text-gray-800 border border-gray-200 rounded-bl-none'}`}>
+                    {msg.text}
+                  </div>
+                </div>
+              ))}
+              {isTyping && (
+                <div className="flex justify-start">
+                  <div className="bg-white border border-gray-200 p-4 rounded-2xl rounded-bl-none shadow-sm">
+                    <div className="flex space-x-2">
+                      <div className="w-2.5 h-2.5 bg-purple-600 rounded-full animate-bounce"></div>
+                      <div className="w-2.5 h-2.5 bg-pink-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-2.5 h-2.5 bg-purple-600 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
+
+            {/* Quick Replies */}
+            <div className="p-3 bg-gray-50 border-t overflow-x-auto">
+              <div className="flex space-x-2 pb-1">
+                {quickReplies.map((reply, idx) => (
+                  <button key={idx} onClick={() => handleQuickReply(reply)}
+                    className="bg-white text-sm text-gray-700 px-3 py-2 rounded-full border border-gray-200 hover:border-purple-600 hover:bg-purple-50 hover:text-purple-700 whitespace-nowrap transition-all shadow-sm"
+                  >
+                    {reply}
+                  </button>
+                ))}
+              </div>
+              <div className="mt-2 text-xs text-gray-500 px-1">
+                {categories.map((cat, i) => (
+                  <span key={i} className="mr-2 block">{cat}</span>
+                ))}
+              </div>
+            </div>
+
+            {/* Input */}
+            <div className="p-4 border-t bg-white rounded-b-2xl">
+              <div className="flex space-x-2">
+                <input type="text" value={input} onChange={(e) => setInput(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                  placeholder="Ask me anything..."
+                  className="flex-1 border border-gray-300 rounded-full px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                />
+                <button onClick={handleSend}
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-2.5 rounded-full hover:shadow-lg transition-all">
+                  <Send className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          </div>
+        )
+      }
+        </div >
+      );
+    }
+
+    const root = createRoot(document.getElementById('root'));
+    root.render(<ShopifyDemo />);
+  </script>
+</body>
+
+</html>

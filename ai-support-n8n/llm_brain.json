@@ -1,0 +1,516 @@
+{
+  "name": "LLM Brain",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "llm-brain",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "llm-webhook",
+      "name": "LLM Brain Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        240,
+        400
+      ],
+      "webhookId": "llm-brain"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/embeddings",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"text-embedding-3-small\",\n  \"input\": \"{{ $json.body.message }}\",\n  \"dimensions\": 512\n}",
+        "options": {}
+      },
+      "id": "create-embedding",
+      "name": "Create Embedding",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        460,
+        400
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "openai-credentials",
+          "name": "OpenAI API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Log embedding cost\nconst usage = $json.usage;\nconst inputTokens = usage.total_tokens;\n\nreturn {\n  embedding_vector: $json.data[0].embedding,\n  embedding_tokens: inputTokens,\n  model: 'text-embedding-3-small',\n  service: 'openai_embedding'\n};"
+      },
+      "id": "extract-embedding",
+      "name": "Extract Embedding",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        680,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.PINECONE_INDEX_URL }}/query",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Api-Key",
+              "value": "={{ $env.PINECONE_API_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"namespace\": \"{{ $('Router Webhook').item.json.body.pinecone_namespace }}\",\n  \"vector\": {{ JSON.stringify($json.embedding_vector) }},\n  \"topK\": 5,\n  \"includeMetadata\": true\n}",
+        "options": {}
+      },
+      "id": "query-pinecone",
+      "name": "Query Pinecone",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        900,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract relevant context from Pinecone results\nconst matches = $json.matches || [];\n\nconst context = matches.map(match => {\n  return `[Score: ${match.score.toFixed(3)}] ${match.metadata.text || match.metadata.content || ''}`;\n}).join('\\n\\n');\n\nreturn {\n  retrieved_context: context,\n  retrieval_count: matches.length,\n  top_score: matches.length > 0 ? matches[0].score : 0\n};"
+      },
+      "id": "extract-context",
+      "name": "Extract Context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build system prompt with retrieved context and history\nconst inbound = $('LLM Brain Webhook').item.json.body;\nconst context = $json.retrieved_context;\nconst category = inbound.domain;\nconst history = inbound.chat_history || [];\n\n// Format history\nconst historyText = history.map(h => `${h.role.toUpperCase()}: ${h.content}`).join('\\n');\n\n// Dynamic Model Selection\nconst usePowerfulModel = context.length > 0 || history.length > 5;\nconst selectedModel = usePowerfulModel ? 'gpt-4o' : 'gpt-3.5-turbo';\n\nconst productInfo = `\\nPRODUCT CONTEXT (AI Support Widget):\\n- Description: Beautiful, embeddable customer chat widget for websites.\\n- Features: Real-time Chat (AI-powered), Customizable (brand colors), Responsive (mobile/desktop), Lightweight.\\n- Installation:\\n  Add to HTML before </body>:\\n  <link rel=\"stylesheet\" href=\"https://your-cdn.com/widget.css\">\\n  <script src=\"https://your-cdn.com/widget.js\"></script>\\n  <script>\\n    AISupportWidget.init({\\n      apiUrl: 'https://your-api.onrender.com',\\n      position: 'bottom-right',\\n      primaryColor: '#667eea',\\n      welcomeMessage: 'Hi! How can I help you today?',\\n      businessName: 'Your Business'\\n    });\\n  </script>\\n- Configuration Options: apiUrl (required), position (bottom-right/left, top-right/left), primaryColor, welcomeMessage, businessName, avatarUrl.\\n`;\n\nconst systemPrompt = `You are an expert customer support AI assistant for the \"AI Support Widget\".\\n\\nYour task is to help potential customers understand, install, and configure the AI Support Widget.\\n\\n${productInfo}\\n\\nKNOWLEDGE BASE CONTEXT (Additional):\\n${context}\\n\\nCONVERSATION HISTORY:\\n${historyText}\\n\\nIMPORTANT RULES:\\n1. You are acting as the demo bot FOR the widget itself.\\n2. Use the PRODUCT CONTEXT above to answer questions about the widget.\\n3. If the user asks about \"this website\" or \"this demo\", refer to the AI Support Widget.\\n4. Be friendly, professional, and concise.\\n5. If you cannot answer with confidence, escalate to a human agent.\\n\\nRESPONSE FORMAT:\\nYou MUST structure your response in the following XML format:\\n\\n<SUMMARY>\\n[Brief internal summary of the user's question]\\n</SUMMARY>\\n\\n<DECISION>\\n<ACTION>reply_to_user | escalate_to_human | ask_clarification</ACTION>\\n<ESCALATE>yes | no</ESCALATE>\\n<REASON>[Why you chose this action]</REASON>\\n</DECISION>\\n\\n<REPLY>\\n[Your actual response to the customer - friendly, helpful, professional]\\n</REPLY>\\n\\nESCALATE TO HUMAN IF:\\n- Question is outside your knowledge base\\n- User is frustrated or angry\\n- Requires account-specific actions\\n- Policy exceptions needed\\n- Sensitive financial matters\\n- User explicitly asks for a human\\n\\nUser's Question: \"${inbound.message}\"`;\n\nreturn {\n  system_prompt: systemPrompt,\n  user_message: inbound.message,\n  selected_model: selectedModel\n};"
+      },
+      "id": "build-prompt",
+      "name": "Build System Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1340,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"{{ $json.selected_model }}\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": {{ JSON.stringify($json.system_prompt) }}\n    },\n    {\n      \"role\": \"user\",\n      \"content\": {{ JSON.stringify($json.user_message) }}\n    }\n  ],\n  \"temperature\": 0.3,\n  \"max_tokens\": 800\n}",
+        "options": {}
+      },
+      "id": "call-gpt",
+      "name": "Call LLM",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        1560,
+        400
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "openai-credentials",
+          "name": "OpenAI API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse GPT response and extract structured blocks\nconst response = $json.choices[0].message.content;\nconst usage = $json.usage;\n\n// Extract XML blocks using regex\nconst summaryMatch = response.match(/<SUMMARY>([\\s\\S]*?)<\\/SUMMARY>/);\nconst actionMatch = response.match(/<ACTION>([\\s\\S]*?)<\\/ACTION>/);\nconst escalateMatch = response.match(/<ESCALATE>([\\s\\S]*?)<\\/ESCALATE>/);\nconst reasonMatch = response.match(/<REASON>([\\s\\S]*?)<\\/REASON>/);\nconst replyMatch = response.match(/<REPLY>([\\s\\S]*?)<\\/REPLY>/);\n\nconst summary = summaryMatch ? summaryMatch[1].trim() : '';\nconst action = actionMatch ? actionMatch[1].trim() : 'reply_to_user';\nconst shouldEscalate = escalateMatch ? escalateMatch[1].trim().toLowerCase() === 'yes' : false;\nconst reason = reasonMatch ? reasonMatch[1].trim() : '';\nconst reply = replyMatch ? replyMatch[1].trim() : response;\n\nreturn {\n  summary: summary,\n  action: action,\n  escalate: shouldEscalate,\n  reason: reason,\n  bot_response: reply,\n  llm_input_tokens: usage.prompt_tokens,\n  llm_output_tokens: usage.completion_tokens,\n  llm_model: $('Call LLM').item.json.selected_model,\n  raw_response: response\n};"
+      },
+      "id": "parse-llm-response",
+      "name": "Parse LLM Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1780,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.FASTAPI_BASE_URL }}/api/log-cost",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "session_id",
+              "value": "={{ $('LLM Brain Webhook').item.json.body.session_id }}"
+            },
+            {
+              "name": "event_id",
+              "value": "={{ $('LLM Brain Webhook').item.json.body.session_id }}"
+            },
+            {
+              "name": "service",
+              "value": "={{ $('Extract Embedding').item.json.service }}"
+            },
+            {
+              "name": "model",
+              "value": "={{ $('Extract Embedding').item.json.model }}"
+            },
+            {
+              "name": "input_tokens",
+              "value": "={{ $('Extract Embedding').item.json.embedding_tokens }}"
+            },
+            {
+              "name": "output_tokens",
+              "value": "0"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "log-embedding-cost",
+      "name": "Log Embedding Cost",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        2000,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.FASTAPI_BASE_URL }}/api/log-cost",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "session_id",
+              "value": "={{ $('LLM Brain Webhook').item.json.body.session_id }}"
+            },
+            {
+              "name": "event_id",
+              "value": "={{ $('LLM Brain Webhook').item.json.body.session_id }}"
+            },
+            {
+              "name": "service",
+              "value": "openai_completion"
+            },
+            {
+              "name": "model",
+              "value": "={{ $json.llm_model }}"
+            },
+            {
+              "name": "input_tokens",
+              "value": "={{ $json.llm_input_tokens }}"
+            },
+            {
+              "name": "output_tokens",
+              "value": "={{ $json.llm_output_tokens }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "log-llm-cost",
+      "name": "Log LLM Cost",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        2000,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.escalate }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "check-escalation",
+      "name": "Check Escalation",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2220,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare escalation payload\nconst inbound = $('LLM Brain Webhook').item.json.body;\nconst parsed = $json;\n\nreturn {\n  ...inbound,\n  ...parsed,\n  escalation_reason: parsed.reason,\n  conversation_summary: parsed.summary\n};"
+      },
+      "id": "prepare-escalation",
+      "name": "Prepare Escalation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.N8N_WEBHOOK_BASE }}/escalation-handler",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=",
+              "value": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "route-to-escalation",
+      "name": "Route to Escalation Handler",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        2660,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare bot response for sending\nconst inbound = $('LLM Brain Webhook').item.json.body;\nconst parsed = $json;\n\nreturn {\n  session_id: inbound.session_id,\n  channel: inbound.channel,\n  user_id: inbound.user_id,\n  bot_response: parsed.bot_response,\n  response_type: 'ai_response'\n};"
+      },
+      "id": "prepare-response",
+      "name": "Prepare Bot Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2440,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.N8N_WEBHOOK_BASE }}/outbound-sender",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=",
+              "value": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "send-response",
+      "name": "Send Bot Response",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        2660,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true } }}"
+      },
+      "id": "respond",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        2880,
+        400
+      ]
+    }
+  ],
+  "connections": {
+    "LLM Brain Webhook": {
+      "main": [
+        [
+          {
+            "node": "Create Embedding",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Embedding": {
+      "main": [
+        [
+          {
+            "node": "Extract Embedding",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Embedding": {
+      "main": [
+        [
+          {
+            "node": "Query Pinecone",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query Pinecone": {
+      "main": [
+        [
+          {
+            "node": "Extract Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Context": {
+      "main": [
+        [
+          {
+            "node": "Build System Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build System Prompt": {
+      "main": [
+        [
+          {
+            "node": "Call LLM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call LLM": {
+      "main": [
+        [
+          {
+            "node": "Parse LLM Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse LLM Response": {
+      "main": [
+        [
+          {
+            "node": "Log Embedding Cost",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Log LLM Cost",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Check Escalation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Escalation": {
+      "main": [
+        [
+          {
+            "node": "Prepare Escalation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare Bot Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Escalation": {
+      "main": [
+        [
+          {
+            "node": "Route to Escalation Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route to Escalation Handler": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Bot Response": {
+      "main": [
+        [
+          {
+            "node": "Send Bot Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Bot Response": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

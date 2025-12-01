@@ -1,0 +1,404 @@
+# ACCOUNT MANAGEMENT KNOWLEDGE BASE
+
+## Overview
+Your Urban Threads account gives you access to order history, saved payment methods, wishlists, and exclusive member benefits. This guide covers everything related to account management.
+
+## Creating an Account
+
+### Registration Process
+1. Visit urbanthreads.com/register
+2. Enter email address
+3. Create secure password (8+ characters)
+4. Agree to terms of service
+5. Verify email (check inbox/spam)
+6. Complete profile (optional)
+
+### Account Benefits
+- Faster checkout
+- Order tracking
+- Wishlist and saved items
+- Exclusive member deals
+- Birthday rewards
+- Referral bonuses
+- Address book
+
+### Guest Checkout
+- No account required
+- Limited order tracking
+- No saved preferences
+- Can create account later using order email
+
+## Login Issues
+
+### Forgotten Password
+
+**Reset process:**
+1. Click "Forgot Password" on login page
+2. Enter registered email address
+3. Check email for reset link (expires in 24 hours)
+4. Create new password
+5. Log in with new credentials
+
+**Didn't receive email?**
+- Check spam/junk folder
+- Verify email address spelling
+- Wait 10 minutes and try again
+- Contact support if still not received
+
+### Account Locked
+**Reasons:**
+- Too many failed login attempts (5 within 30 min)
+- Suspicious activity detected
+- Payment dispute in progress
+- Terms of service violation
+
+**Unlock:**
+- Wait 30 minutes for automatic unlock
+- Click "Unlock Account" link in security email
+- Contact support for immediate assistance
+- Verify identity with order history
+
+### Email Not Recognized
+**Possible reasons:**
+- Account created with different email
+- Never created account (used guest checkout)
+- Typo in email address
+- Account deleted/suspended
+
+**Solutions:**
+- Try alternative email addresses
+- Search email for "Urban Threads" confirmations
+- Create new account
+- Contact support with order numbers
+
+## Account Security
+
+### Password Requirements
+- Minimum 8 characters
+- At least one uppercase letter
+- At least one number
+- Special character recommended
+- Cannot be previous 5 passwords
+- Change every 90 days (recommended)
+
+### Two-Factor Authentication (2FA)
+**Setup:**
+1. Account Settings > Security
+2. Enable 2FA
+3. Choose method: SMS or Authenticator app
+4. Verify phone number or scan QR code
+5. Save backup codes securely
+
+**Benefits:**
+- Extra layer of security
+- Protect against unauthorized access
+- Required for withdrawals and sensitive changes
+- Insurance against account takeover
+
+### Security Best Practices
+- Never share password
+- Use unique password (not used elsewhere)
+- Enable 2FA
+- Log out on shared devices
+- Review account activity regularly
+- Set up login alerts
+
+## Profile Management
+
+### Personal Information
+
+**Editable fields:**
+- Name (first and last)
+- Email address (requires verification)
+- Phone number
+- Birthday (for rewards)
+- Gender (optional)
+- Preferred language
+
+**Update process:**
+1. Account Settings > Profile
+2. Click "Edit" next to field
+3. Enter new information
+4. Save changes
+5. Verify via email if changing email/phone
+
+### Address Book
+- Save multiple shipping addresses
+- Set default shipping address
+- Set default billing address
+- Nickname addresses ("Home," "Work," etc.)
+- Edit or delete saved addresses
+
+### Communication Preferences
+
+**Email notifications:**
+- Order updates and shipping
+- Promotional emails and sales
+- New arrivals
+- Back-in-stock alerts
+- Newsletter
+- Personalized recommendations
+
+**SMS notifications:**
+- Order shipped alerts
+- Delivery updates
+- Flash sale notifications
+- Opt-in required
+
+## Payment Methods
+
+### Saving Cards
+- Securely stored (tokenized)
+- Last 4 digits visible
+- Expiration date shown
+- Set default payment method
+- Remove cards anytime
+
+### Managing Saved Cards
+1. Account > Payment Methods
+2. View all saved cards
+3. Add new card
+4. Update expiration dates
+5. Remove old cards
+6. Set default for faster checkout
+
+### Security
+- Full card number never displayed
+- CVV not stored (re-enter at checkout)
+- Billing address required
+- Fraud monitoring active
+
+## Order History
+
+### Viewing Orders
+- Account > Orders
+- Filter by date range, status, or item
+- See all past purchases
+- Track current shipments
+- Download invoices
+
+### Order Details
+- Order number and date
+- Items purchased
+- Prices paid
+- Shipping method used
+- Tracking information
+- Return/exchange options
+
+### Reordering
+- Click "Order Again" on past orders
+- Items added to cart
+- Prices may have changed
+- Out of stock items noted
+
+## Wishlist & Saved Items
+
+### Creating Wishlists
+- Create multiple wishlists
+- Name them (e.g., "Birthday Ideas")
+- Add/remove items
+- Share with friends/family
+- Privacy settings (public/private)
+
+### Managing Saved Items
+- Heart icon on product pages
+- View all saved items in one place
+- Price drop notific ations
+- Back-in-stock alerts
+- Move to cart when ready
+
+## Referral Program
+
+### How It Works
+- Share unique referral link
+- Friend gets 10% off first order
+- You get $10 credit when they purchase
+- No limit on referrals
+- Credits added automatically
+
+### Tracking Referrals
+- Dashboard shows pending referrals
+- See completed referrals
+- View earned credits
+- Share via email, social media, or direct link
+
+## Membership Tiers
+
+### Free Account
+- Basic features
+- Standard shipping rates
+- Access to sales
+
+### Premium Member ($9.99/month)
+- Free standard shipping
+- Exclusive early access
+- Monthly bonus credits
+- Birthday gift
+- Priority customer support
+
+### VIP (Invite Only)
+- All Premium benefits
+- 15% off everything
+- Free express shipping
+- Concierge service
+- Exclusive events
+
+## Deleting Your Account
+
+### Before You Delete
+- Download order history
+- Use remaining store credit
+- Cancel active subscriptions
+- Process any pending returns
+
+### Deletion Process
+1. Account Settings > Privacy
+2. Click "Delete Account"
+3. Confirm reason for deletion
+4. Re-enter password
+5. Permanent deletion in 30 days
+
+### Data Retention
+- Order history: 7 years (tax compliance)
+- Personal info: Deleted after 30 days
+- Marketing data: Immediately removed
+- Payment data: Removed immediately
+
+### Reactivation
+- Within 30 days: Contact support
+- After 30 days: Create new account
+- Order history not recoverable
+
+## Privacy Settings
+
+### Data We Collect
+- Account information
+- Purchase history
+- Browsing behavior
+- Location (with permission)
+- Device information
+
+### How We Use Data
+- Process orders
+- Personalized recommendations
+- Marketing communications
+- Improve website experience
+- Fraud prevention
+
+### Your Rights
+- Access your data
+- Request data deletion
+- Opt-out of marketing
+- Port data to another service
+- Lodge complaints with privacy authorities
+
+### Cookie Preferences
+- Essential cookies (required)
+- Analytics cookies (optional)
+- Marketing cookies (optional)
+- Customize in settings
+
+## Account Notifications
+
+### Push Notifications (App)
+- Order status updates
+- Special offers
+- Price drops on saved items
+- Back-in-stock alerts
+- Custom from preferences settings
+
+### Email Alerts
+- Order confirmations
+- Shipping notifications
+- Delivery confirmations
+- Price drop alerts
+- Promotional emails
+
+### Manage Notifications
+- Account > Notifications
+- Toggle each type on/off
+- Set frequency preferences
+- Unsubscribe from specific lists
+
+## Birthday Rewards
+
+### How to Qualify
+- Add birthday to profile
+- Opt-in to birthday emails
+- Account at least 30 days old
+- Email verified
+
+### Reward Details
+- $10 birthday credit
+- Sent on birthday
+- Valid for 60 days
+- Minimum purchase $25
+- One per year
+
+## Troubleshooting
+
+### Can't Access Account
+1. Verify you're using correct email
+2. Reset password
+3. Check if account was deleted
+4. Contact support with order info
+
+### Wrong Email Address
+- Update in account settings
+- Verification email sent to new address
+- Confirm within 24 hours
+- Old email remains active during transition
+
+### Missing Orders
+- Check all email addresses
+- Verify order number
+- May have used guest checkout
+- Contact support with details
+
+### Duplicate Accounts
+- Merge not possible
+- Choose primary account
+- Transfer order history manually
+- Delete duplicate
+
+## Common Questions
+
+Q: Can I change my registered email?
+A: Yes, in Account Settings. Verification required.
+
+Q: How do I cancel Premium membership?
+A: Account > Subscriptions > Cancel Membership.
+
+Q: What happens to my credits if I delete my account?
+A: They're forfeited. Use them first!
+
+Q: Can someone else use my account?
+A: No, accounts are non-transferable.
+
+Q: How do I contact customer support?
+A: Email, phone, or live chat - all linked in account dashboard.
+
+Q: Is my payment information secure?
+A: Yes, we use bank-level encryption and never store full card numbers.
+
+Q: Can I have multiple accounts?
+A: Not recommended, but not prohibited. One account per person preferred.
+
+Q: How do I unsubscribe from emails?
+A: Click unsubscribe at bottom of any email, or manage in account settings.
+
+## Contact Support
+
+- **Email:** accounts@urbanthreads.com
+- **Phone:** 1-800-THREADS option 5
+- **Live Chat:** Account dashboard
+- **Hours:** 24/7 automated, Live support Mon-Fri 8AM-8PM EST
+
+**Include:**
+- Registered email address
+- Account username (if different)
+- Description of issue
+- Screenshots if helpful
+- Order numbers (if relevant)
+
+Last Updated: January 2025

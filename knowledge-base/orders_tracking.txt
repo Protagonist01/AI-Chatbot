@@ -1,0 +1,547 @@
+# ORDERS & TRACKING KNOWLEDGE BASE
+
+## Overview
+Track your Urban Threads orders from purchase to delivery. Get real-time updates, modify orders, and resolve shipping issues.
+
+## Order Status
+
+### Order Stages
+
+**1. Order Placed**
+- Confirmation email sent immediately
+- Order number assigned
+- Payment processed
+- Estimated delivery date provided
+
+**2. Processing**
+- Items being prepared for shipment
+- Quality check performed
+- Packaging in progress
+- Typically 1-2 business days
+
+**3. Shipped**
+- Package handed to carrier
+- Tracking number active
+- Shipping confirmation email sent
+- Estimated delivery updated
+
+**4. In Transit**
+- Package moving through carrier network
+- Real-time tracking updates
+- Location updates every 12-24 hours
+- Delivery date confirmed
+
+**5. Out for Delivery**
+- Package on delivery vehicle
+- Arriving today
+- Delivery window provided (if available)
+- Final tracking update
+
+**6. Delivered**
+- Package delivered successfully
+- Delivery confirmation email
+- Signature/photo proof (if applicable)
+- Delivery location noted
+
+### Checking Order Status
+
+**Online:**
+1. Log into your account
+2. Go to "My Orders"
+3. Click on order number
+4. View detailed status and tracking
+
+**Without Account:**
+- Use order number + email
+- Visit urbanthreads.com/track
+- Enter order details
+- View status and tracking
+
+**Via Email:**
+- Check confirmation email
+- Click "Track Order" link
+- Redirects to tracking page
+
+## Tracking Your Shipment
+
+### Tracking Information
+
+**What tracking shows:**
+- Current package location
+- Estimated delivery date
+- Delivery attempts
+- Exceptions or delays
+- Delivery proof (photo/signature)
+
+**Tracking updates:**
+- Updated every 12-24 hours
+- Real-time for final delivery
+- Push notifications available (app)
+- Email alerts for major updates
+
+### Tracking Number
+
+**Where to find it:**
+- Shipping confirmation email
+- Order details page
+- SMS notification (if opted in)
+- Account order history
+
+**Tracking number format:**
+- USPS: 20-22 digits
+- UPS: 1Z followed by 16 characters
+- FedEx: 12-14 digits
+- DHL: 10-11 digits
+
+### Carrier Tracking
+
+**Direct carrier tracking:**
+- USPS: usps.com/track
+- UPS: ups.com/tracking
+- FedEx: fedex.com/tracking
+- DHL: dhl.com/track
+
+**Why track with carrier:**
+- More detailed updates
+- Delivery preferences
+- Reroute options
+- Hold for pickup
+
+## Shipping Options
+
+### Standard Shipping
+- **Cost:** Free on orders $50+, otherwise $5.99
+- **Delivery:** 5-7 business days
+- **Tracking:** Included
+- **Insurance:** Up to $100 included
+- **Carrier:** USPS or UPS (our choice)
+
+### Express Shipping
+- **Cost:** $14.99
+- **Delivery:** 2-3 business days
+- **Tracking:** Real-time updates
+- **Insurance:** Up to $500 included
+- **Carrier:** UPS or FedEx
+
+### Overnight Shipping
+- **Cost:** $29.99
+- **Delivery:** Next business day
+- **Cutoff time:** 12PM EST for same-day dispatch
+- **Tracking:** Real-time with delivery alerts
+- **Insurance:** Full value covered
+- **Carrier:** FedEx Priority Overnight
+
+### International Shipping
+- **Cost:** Calculated at checkout (starting $19.99)
+- **Delivery:** 7-21 business days (varies by country)
+- **Tracking:** International tracking included
+- **Insurance:** Optional (recommended)
+- **Customs:** Customer responsible for fees
+- **Carrier:** USPS, DHL, or FedEx International
+
+## Order Modifications
+
+### Before Shipment
+
+**Can be modified:**
+- Shipping address
+- Shipping speed
+- Add items to order
+- Apply discount code
+- Update payment method
+
+**How to modify:**
+1. Contact support immediately
+2. Provide order number
+3. Specify changes needed
+4. Confirm updated total (if applicable)
+5. Receive confirmation email
+
+**Modification deadline:**
+- Standard orders: Before processing (usually 2-4 hours)
+- Express/Overnight: Within 30 minutes of order
+
+### After Shipment
+
+**Limited modifications:**
+- Cannot change address directly
+- Can request carrier reroute (fee may apply)
+- Cannot add items
+- Cannot change shipping speed
+
+**Reroute options:**
+- Contact carrier directly with tracking number
+- UPS My Choice: Free address change
+- FedEx Delivery Manager: Reroute options
+- USPS: Intercept service ($15-20)
+
+## Order Cancellation
+
+### Cancellation Window
+
+**Before processing:**
+- Full refund
+- Instant cancellation
+- Usually within 1-2 hours of order
+
+**During processing:**
+- May not be possible
+- Contact support immediately
+- Partial cancellation possible
+- May need to refuse delivery
+
+**After shipment:**
+- Cannot cancel
+- Must return after delivery
+- See "Returns & Exchanges" category
+
+### How to Cancel
+
+**Online:**
+1. Go to order details
+2. Click "Cancel Order"
+3. Select cancellation reason
+4. Confirm cancellation
+5. Refund processed within 3-5 days
+
+**By phone/chat:**
+- Provide order number
+- Verify account details
+- Request cancellation
+- Receive confirmation
+
+### Partial Cancellation
+- Cancel specific items from order
+- Remaining items still ship
+- Refund for cancelled items only
+- Shipping cost may be adjusted
+
+## Delivery Options
+
+### Standard Delivery
+- Left at door (signature optional)
+- Safe place notes: Add during checkout
+- Photography proof: Provided by carrier
+- Contactless delivery available
+
+### Signature Required
+- All packages $200+ value
+- Express and overnight shipping
+- International shipments over $100
+- Upon customer request (free)
+
+**Signature types:**
+- Direct: Hand to recipient only
+- Indirect: Anyone at address
+- Adult (21+): ID verification required
+
+### Alternative Delivery Locations
+
+**UPS Access Point:**
+- Select during checkout
+- Pick up at nearby location
+- Hold for up to 7 days
+- ID required for pickup
+
+**FedEx Office:**
+- Hold for pickup available
+- Redirect after shipment
+- Extended hold times
+- Convenient locations
+
+**USPS Hold for Pickup:**
+- Free service
+- Hold at post office
+- Up to 30 days
+- Request online or at delivery
+
+**Amazon Locker:**
+- Coming soon
+- Secure pickup locations
+- 24/7 access
+- 3-day pickup window
+
+### Delivery Instructions
+
+**Add special instructions:**
+- "Leave at back door"
+- "Ring doorbell"
+- "Do not ring (baby sleeping)"
+- "Leave with neighbor at [address]"
+- "Call upon arrival"
+
+**Note:** Instructions are requests, not guarantees. Carrier discretion applies.
+
+## Delivery Issues
+
+### Package Not Delivered
+
+**If tracking shows delivered but not received:**
+1. Wait 24 hours (may be scanned early)
+2. Check all possible delivery locations
+3. Ask neighbors and household members
+4. Check mailroom or building office
+5. Look for delivery photo in tracking
+6. Contact carrier after 24 hours
+7. File claim with us after 48 hours
+
+**Common hiding spots:**
+- Behind planters or furniture
+- Side or back door
+- Garage
+- With neighbor
+- Building mail room
+- Parcel locker
+
+### Delayed Delivery
+
+**Common delay reasons:**
+- Weather conditions
+- High package volume (holidays)
+- Carrier delays
+- Incorrect address
+- Customs clearance (international)
+- Delivery exceptions
+
+**What to do:**
+- Check tracking for updates
+- Allow 2 extra days for standard shipping
+- Contact carrier for details
+- Contact us if delay exceeds 5 days
+
+**Compensation:**
+- Express/Overnight late: Full shipping refund
+- Standard late: Case-by-case basis
+- Must file claim within 7 days
+
+### Damaged Package
+
+**Upon delivery:**
+1. Accept package but note damage on receipt
+2. Take photos of box and contents
+3. Keep all packaging materials
+4. Report within 24 hours
+5. Email photos to claims@urbanthreads.com
+
+**Do not:**
+- Refuse package (complicates claim)
+- Discard packaging
+- Use damaged items
+
+**Resolution:**
+- Replacement shipped immediately
+- Full refund option
+- Return label provided
+- Claim processed within 3-5 days
+
+### Lost Package
+
+**If tracking stuck or no updates:**
+- Standard: Allow 2 extra days
+- Express: Contact after 1 day delay
+- International: Allow 5 extra days
+- File claim after waiting period
+
+**Claim process:**
+1. Contact us with order number
+2. Provide tracking details
+3. Investigation initiated
+4. Resolution within 7-10 days
+5. Replacement or refund issued
+
+### Stolen Package (Porch Piracy)
+
+**Steps to take:**
+1. File police report
+2. Contact us within 48 hours
+3. Provide police report number
+4. Submit claim form
+5. We'll work with you on resolution
+
+**Prevention:**
+- Require signature
+- Use alternative pickup location
+- Install security camera
+- Request hold for pickup
+- Ship to work address
+
+## International Orders
+
+### Customs & Duties
+
+**Customer responsibility:**
+- All customs fees and import taxes
+- Varies by country and item value
+- Typically 0-30% of declared value
+- Plus VAT/GST where applicable
+
+**Customs delays:**
+- Can add 3-10 days to delivery
+- Random inspections common
+- Provide accurate customs info
+- Respond to customs requests promptly
+
+**Detained packages:**
+- Contact local customs office
+- Provide required documentation
+- Pay any assessed fees
+- Refused delivery: Return shipping at customer expense
+
+### International Tracking
+
+**Tracking limitations:**
+- May have gaps during customs
+- Updates less frequent
+- Final delivery tracking varies by country
+- Use local postal service for final mile
+
+### Supported Countries
+We ship to 150+ countries including:
+- Canada, Mexico (5-7 days)
+- UK, Europe (7-14 days)
+- Australia, New Zealand (10-16 days)
+- Asia (8-21 days)
+- South America (10-21 days)
+
+### Restricted Countries
+Currently unable to ship to:
+- North Korea, Iran, Syria
+- Areas under trade embargo
+- Remote territories (case-by-case)
+
+## Multiple Item Orders
+
+### Partial Shipments
+
+**When items ship separately:**
+- Different warehouse locations
+- Availability varies by item
+- Faster delivery for in-stock items
+- No additional shipping cost
+
+**Tracking:**
+- Separate tracking number for each shipment
+- All numbers in order confirmation
+- Individual delivery dates
+
+### Consolidated Shipping
+
+**Request consolidation:**
+- Contact us before processing
+- All items ship together
+- May delay overall delivery
+- Reduces packaging waste
+
+## Order History
+
+### Viewing Past Orders
+
+**Access order history:**
+- Log into account
+- Click "Order History"
+- View all past purchases
+- Filter by date, status, or item
+
+**Order details include:**
+- Order date and number
+- Items purchased
+- Prices paid
+- Shipping method
+- Tracking information
+- Invoice download
+
+### Reordering
+
+**Quick reorder:**
+- Click "Order Again" on past orders
+- Items added to cart
+- Prices may have changed
+- Check for current promotions
+
+## Shipping Calendar
+
+### Holiday Shipping Deadlines
+
+**For Christmas Delivery:**
+- Standard: December 15
+- Express: December 20
+- Overnight: December 23
+
+**Other Holidays:**
+- Check website for updated deadlines
+- International: Order 3-4 weeks early
+- Peak season: Add 1-2 days to estimates
+
+### Processing Schedule
+
+**Order cutoff times:**
+- Monday-Friday: Orders before 2PM EST ship same day
+- Weekends: Orders processed Monday
+- Holidays: Next business day processing
+
+**Peak season delays:**
+- November-December: Add 1-2 days
+- Weather delays: Notification sent
+- Carrier delays: Not our responsibility but we'll help
+
+## Order Notifications
+
+### Email Notifications
+- Order confirmation
+- Shipping confirmation
+- Delivery confirmation
+- Delay notifications
+- Delivery attempt notifications
+
+### SMS Notifications (Opt-in)
+- Order shipped
+- Out for delivery
+- Delivered
+- Delivery exceptions
+
+### Push Notifications (App)
+- Real-time tracking updates
+- Delivery photos
+- Carrier updates
+- Promotion alerts
+
+## Common Questions
+
+Q: Why hasn't my order shipped yet?
+A: Orders typically ship within 1-2 business days. Check order status for updates.
+
+Q: Can I change my shipping address after ordering?
+A: Yes, if order hasn't shipped yet. Contact us ASAP.
+
+Q: What if I won't be home for delivery?
+A: Add delivery instructions or use carrier hold options.
+
+Q: Do you ship to military addresses (APO/FPO)?
+A: Yes! Use standard shipping, typically 10-15 business days.
+
+Q: Can I track multiple orders at once?
+A: Yes, log into account and view all orders with tracking.
+
+Q: What if my package is stuck in customs?
+A: Contact your local customs office with tracking number.
+
+Q: How do I know when my order will arrive?
+A: Check tracking for estimated delivery date, updated as package moves.
+
+Q: Can I pick up my order instead of shipping?
+A: Currently no in-store pickup, but carrier pickup points available.
+
+## Contact Order Support
+
+- **Email:** orders@urbanthreads.com
+- **Phone:** 1-800-THREADS option 2
+- **Live Chat:** urbanthreads.com/chat
+- **Hours:** 7 days/week, 8AM-8PM EST
+
+**Include in your message:**
+- Order number
+- Tracking number (if available)
+- Issue description
+- Photos (if damaged/wrong item)
+
+Last Updated: January 2025

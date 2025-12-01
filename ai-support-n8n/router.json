@@ -1,0 +1,167 @@
+{
+  "name": "Router",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "router",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "router-webhook",
+      "name": "Router Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        240,
+        400
+      ],
+      "webhookId": "router"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Map category to Pinecone namespace\nconst category = $json.body.selected_category;\n\nconst namespaceMap = {\n  'refunds': 'refunds',\n  'withdrawals': 'withdrawals',\n  'shipping': 'shipping',\n  'returns': 'returns',\n  'billing': 'billing',\n  'account': 'account'\n};\n\nreturn {\n  ...$json.body,\n  pinecone_namespace: namespaceMap[category] || 'general',\n  domain: category\n};"
+      },
+      "id": "determine-namespace",
+      "name": "Determine Pinecone Namespace",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM get_session_history('{{ $json.session_id }}', 10);",
+        "options": {}
+      },
+      "id": "fetch-history",
+      "name": "Fetch History",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2,
+      "position": [
+        680,
+        400
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "supabase-postgres",
+          "name": "Supabase PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Merge history with body\nconst body = $('Determine Pinecone Namespace').item.json;\nconst history = $input.all().map(item => item.json);\n\nreturn {\n  ...body,\n  chat_history: history\n};"
+      },
+      "id": "merge-history",
+      "name": "Merge History",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.N8N_WEBHOOK_BASE }}/llm-brain",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=",
+              "value": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "call-llm-brain",
+      "name": "Call LLM Brain",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        1120,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true } }}"
+      },
+      "id": "respond",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        400
+      ]
+    }
+  ],
+  "connections": {
+    "Router Webhook": {
+      "main": [
+        [
+          {
+            "node": "Determine Pinecone Namespace",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Determine Pinecone Namespace": {
+      "main": [
+        [
+          {
+            "node": "Fetch History",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch History": {
+      "main": [
+        [
+          {
+            "node": "Merge History",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge History": {
+      "main": [
+        [
+          {
+            "node": "Call LLM Brain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call LLM Brain": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

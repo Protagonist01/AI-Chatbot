@@ -1,0 +1,389 @@
+# HUMAN AGENT ESCALATION KNOWLEDGE BASE
+
+## Overview
+While our AI assistant handles most requests efficiently, some situations require the expertise and empathy of a human agent. This guide explains when and how to connect with our customer support team.
+
+## When to Escalate to a Human Agent
+
+### Automatic Escalation Triggers
+The AI will automatically connect you to a human agent if:
+- Complex account issues (multiple failed attempts)
+- Sensitive personal information needed
+- Legal or compliance matters
+- Fraud or security concerns
+- Complaint about service quality
+- Emotional distress detected
+- Technical issues the AI cannot resolve
+- Custom requests requiring approval
+
+### You Can Manually Request a Human Anytime
+Simply say:
+- "I want to speak to a human"
+- "Connect me to an agent"
+- "This isn't helping, I need real support"
+- "Let me talk to a person"
+- "Escalate to human"
+- Or select option 7 from the category menu
+
+## What to Expect
+
+### Connection Process
+1. **Request acknowledged:** "Connecting you to the next available agent..."
+2. **Wait time provided:** Typical wait: 30 seconds to 5 minutes
+3. **Queue position shown:** "You are #3 in queue"
+4. **Agent introduction:** Name and employee ID provided
+5. **Context transfer:** Agent sees your conversation history
+
+### Agent Availability
+**24/7 Support:**
+- Critical issues (account locked, fraud)
+- Order tracking
+- General questions
+
+**Business Hours (9AM-9PM EST):**
+- Returns and exchanges
+- Technical support
+- Billing disputes
+- Account modifications
+
+**Specialized Agents:**
+- Monday-Friday only
+- Business/corporate accounts
+- Legal inquiries
+- Media/partnership requests
+
+### Average Response Times
+- **Peak hours (12PM-4PM EST):** 3-5 minute wait
+- **Off-peak:** 30 seconds - 2 minutes
+- **Overnight (12AM-6AM EST):** 1-3 minutes
+- **Holidays:** 5-10 minute wait
+
+### Priority Queue
+**Skip the line if:**
+- Premium/VIP member
+- Order value $500+
+- Prior escalation unresolved
+- System outage affecting you
+- Time-sensitive matter (same-day shipping)
+
+## Agent Capabilities
+
+### What Human Agents Can Do
+
+**Immediate Actions:**
+- Override system restrictions
+- Issue instant refunds/credits
+- Expedite shipping at no charge
+- Cancel orders after cutoff time
+- Waive fees and charges
+- Access detailed order history
+- Modify orders before shipping
+- Create custom solutions
+
+**Approvals & Exceptions:**
+- Return items past 30-day window
+- Accept returns without receipt
+- Price adjustments beyond policy
+- Bulk order special pricing
+- Custom product requests
+- Account limit increases
+- Payment plan arrangements
+
+**Complex Resolutions:**
+- Multi-order issues
+- Account merging
+- Historical data requests
+- Legal document preparation
+- Executive escalation
+- Partnership inquiries
+- Media relations
+
+### What Agents Cannot Do
+- Change core company policies
+- Offer unauthorized discounts over 30%
+- Access other users' accounts
+- Modify credit card charges directly (must go through processor)
+- Recover deleted account data (permanent after 30 days)
+- Override legal/compliance requirements
+
+## Types of Human Support
+
+### Chat Support
+- **Best for:** Quick questions, order status
+- **Response time:** Real-time conversation
+- **Available:** 24/7
+- **Access:** Website chat widget
+- **Features:** Screen sharing, file uploads
+
+### Phone Support
+- **Best for:** Complex issues, prefer voice
+- **Number:** 1-800-THREADS (1-800-847-3237)
+- **Available:** 24/7
+- **Options:** Press 1-7 for category routing
+- **Features:** Call recording, multilingual
+
+### Email Support
+- **Best for:** Non-urgent, detailed documentation needed
+- **Address:** support@urbanthreads.com
+- **Response time:** 2-12 hours
+- **Available:** 24/7 submission
+- **Features:** Attachment support, thread tracking
+
+### Video Call (Premium/VIP)
+- **Best for:** Technical assistance, visual issues
+- **Available:** By appointment
+- **Schedule:** Business hours only
+- **Access:** Sent via email after escalation
+- **Features:** Screen share, product viewing
+
+### In-Person (Store Locations)
+- **Best for:** Returns, fittings, product questions
+- **Locations:** Check urbanthreads.com/stores
+- **Hours:** Vary by location
+- **Walk-in:** Yes, or schedule appointment
+- **Services:** Full service center
+
+## Escalation Levels
+
+### Tier 1: General Support
+- First line of contact
+- Handle 85% of all inquiries
+- Basic account and order support
+- Knowledgeable on policies
+- Can approve small exceptions
+
+### Tier 2: Specialist Support
+- Escalation from Tier 1
+- Technical expertise
+- Complex troubleshooting
+- Higher approval authority
+- 10-year+ product knowledge
+
+### Tier 3: Management
+- Supervisor/Manager level
+- Policy exceptions
+- Complaint resolution
+- Major account issues
+- Executive decision-making
+
+### Executive Support
+- C-level concerns
+- Legal matters
+- Media inquiries
+- Partnership opportunities
+- Major complaints
+
+## Preparing for Human Contact
+
+### Information to Have Ready
+- **Order number** (if applicable)
+- **Account email address**
+- **Detailed description** of issue
+- **Steps already taken** to resolve
+- **Desired outcome**
+- **Supporting documentation** (photos, receipts)
+- **Timeline** of events
+
+### Screenshots & Photos
+For visual issues:
+- Product defects
+- Website errors
+- Packaging damage
+- Sizing comparisons
+- Receipt/invoice
+- Tracking information
+
+### Making the Most of Your Call
+
+**Do:**
+- Be clear and concise
+- Stay calm and polite
+- Have information ready
+- Write down agent name/ID
+- Note reference numbers
+- Ask for email summary
+
+**Don't:**
+- Be abusive or threatening
+- Withhold relevant information
+- Hang up without reference number
+- Refuse reasonable solutions
+- Demand impossible outcomes
+
+## After Speaking with an Agent
+
+### Follow-Up
+- **Confirmation email:** Sent within 1 hour
+- **Reference number:** Save for future contact
+- **Action items:** Review what agent will do
+- **Timeline:** Note when to expect resolution
+- **Feedback survey:** Optional, helps improve service
+
+### If Issue Not Resolved
+1. Contact again with reference number
+2. Request escalation to supervisor
+3. Ask for confirmation of resolution plan
+4. Set specific timeline expectations
+5. Request follow-up call/email
+
+### Escalation Path
+If still unsatisfied:
+1. Request supervisor callback
+2. Email complaints@urbanthreads.com
+3. Submit formal complaint via website
+4. Request executive escalation
+5. External review (BBB, Consumer Protection)
+
+## Special Circumstances
+
+### Language Support
+We offer support in:
+- English (primary)
+- Spanish
+- French
+- Mandarin Chinese
+- German
+- Portuguese
+
+**To request:**
+- Say "Spanish please" to AI
+- Press 8 on phone menu for language
+- Email with "Language: [Language]" in subject
+
+### Accessibility Support
+**For hearing impaired:**
+- TTY: 1-800-XXX-XXXX
+- Video relay service compatible
+- Chat support recommended
+
+**For vision impaired:**
+- Screen reader compatible website
+- Phone support preferred
+- Detailed verbal descriptions provided
+
+### Emergency Situations
+
+**For urgent issues:**
+- Say "Emergency" to AI
+- Press 0 on phone for immediate routing
+- Email: urgent@urbanthreads.com
+- Subject line: URGENT - [Issue]
+
+**Qualify as emergency:**
+- Fraudulent charges in progress
+- Account takeover attempt
+- Safety concerns with product
+- Time-sensitive legal matter
+- Medical issue related to product
+
+## Quality Assurance
+
+### Call Recording
+- All calls recorded for training
+- Transcripts available upon request
+- Used for quality monitoring
+- Stored securely for 90 days
+
+### Agent Performance
+- Regularly reviewed
+- Customer feedback incorporated
+- Continuous training
+- Mystery shopper program
+- Performance bonuses for excellence
+
+### Your Feedback Matters
+After interaction, you may receive:
+- Survey via email (2-3 minutes)
+- Rating request (1-5 stars)
+- Comment opportunity
+- Gift for detailed feedback
+
+## Agent Information
+
+### Agent Identification
+Each agent provides:
+- First name
+- Employee ID number
+- Location (country/region)
+- Direct email (if applicable)
+
+**Save this information** for future reference.
+
+### Agent Authority Levels
+- **Bronze badge:** Standard support (most common)
+- **Silver badge:** Specialist (5+ years)
+- **Gold badge:** Senior/Supervisor (10+ years)
+- **Diamond badge:** Executive team
+
+## Common Questions
+
+Q: How long will I wait for an agent?
+A: Typically 30 seconds to 5 minutes depending on time and queue.
+
+Q: Can I request a specific agent?
+A: Not for initial contact, but can request same agent for follow-up.
+
+Q: Will the agent see my chat history with the AI?
+A: Yes, full context is transferred for continuity.
+
+Q: Can I get a callback instead of waiting?
+A: Yes! Provide phone number and we'll call within 30 minutes.
+
+Q: What if the agent can't help me?
+A: They'll escalate to a supervisor or specialist who can.
+
+Q: Are agents in the US?
+A: We have global support centers. Tier 2+ are US-based.
+
+Q: Can I email the agent directly?
+A: Individual agent emails provided for ongoing issues only.
+
+Q: What if I'm not satisfied with the agent's response?
+A: Ask for supervisor or use reference number to escalate.
+
+## Tips for Best Experience
+
+### Best Times to Contact
+- **Least busy:** Early morning (6-9AM EST), late evening (8-11PM EST)
+- **Most busy:** Lunch hours (12-2PM EST), after work (5-7PM EST)
+- **Avoid:** First Monday of month, day after holidays
+
+### Fastest Resolution
+1. Use live chat for simple issues
+2. Have all information ready
+3. Be clear about desired outcome
+4. Accept reasonable alternatives
+5. Note reference numbers
+
+### For Complex Issues
+- Email first with detailed information
+- Attach relevant documents
+- Request phone callback
+- Allows agent to research beforehand
+- Faster resolution on call
+
+## Contact Directory
+
+**General Support:**
+- Phone: 1-800-THREADS (1-800-847-3237)
+- Email: support@urbanthreads.com
+- Chat: urbanthreads.com/chat
+
+**Specialized Teams:**
+- Returns: returns@urbanthreads.com
+- Billing: billing@urbanthreads.com
+- Technical: tech@urbanthreads.com
+- Corporate: corporate@urbanthreads.com
+- Legal: legal@urbanthreads.com
+
+**Executive Escalation:**
+- Email: executive@urbanthreads.com
+- Response: 24-48 hours
+- For unresolved Tier 3 issues only
+
+**Hours:**
+- 24/7: General support, orders, tracking
+- Business Hours (9AM-9PM EST): Specialized teams
+- Holidays: Limited staff, longer wait times
+
+Last Updated: January 2025

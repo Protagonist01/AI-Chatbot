@@ -1,0 +1,270 @@
+{
+  "name": "Outbound Sender",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "outbound-sender",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "outbound-webhook",
+      "name": "Outbound Sender Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        240,
+        400
+      ],
+      "webhookId": "outbound-sender"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT log_event(\n  '{{ $json.body.session_id }}'::uuid,\n  'bot_message',\n  'bot',\n  '{{ $json.body.bot_response }}',\n  '{\"response_type\": \"{{ $json.body.response_type }}\"}'::jsonb\n);",
+        "options": {}
+      },
+      "id": "log-bot-message",
+      "name": "Log Bot Message",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2,
+      "position": [
+        460,
+        400
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "supabase-postgres",
+          "name": "Supabase PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.body.channel }}",
+              "operation": "equals",
+              "value2": "whatsapp"
+            },
+            {
+              "value1": "={{ $json.body.channel }}",
+              "operation": "equals",
+              "value2": "telegram"
+            },
+            {
+              "value1": "={{ $json.body.channel }}",
+              "operation": "equals",
+              "value2": "web"
+            }
+          ]
+        }
+      },
+      "id": "route-by-channel",
+      "name": "Route by Channel",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        680,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v18.0/{{ $env.WHATSAPP_PHONE_NUMBER_ID }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.WHATSAPP_ACCESS_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $('Outbound Sender Webhook').item.json.body.whatsapp_interactive ? JSON.stringify({\n  \"messaging_product\": \"whatsapp\",\n  \"to\": $('Outbound Sender Webhook').item.json.body.user_id,\n  \"type\": \"interactive\",\n  \"interactive\": $('Outbound Sender Webhook').item.json.body.whatsapp_interactive\n}) : JSON.stringify({\n  \"messaging_product\": \"whatsapp\",\n  \"to\": $('Outbound Sender Webhook').item.json.body.user_id,\n  \"type\": \"text\",\n  \"text\": {\n    \"body\": $('Outbound Sender Webhook').item.json.body.bot_response\n  }\n}) }}",
+        "options": {}
+      },
+      "id": "send-whatsapp",
+      "name": "Send WhatsApp Message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        900,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot{{ $env.TELEGRAM_BOT_TOKEN }}/sendMessage",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"chat_id\": \"{{ $('Outbound Sender Webhook').item.json.body.user_id }}\",\n  \"text\": \"{{ $('Outbound Sender Webhook').item.json.body.bot_response }}\",\n  \"parse_mode\": \"Markdown\",\n  \"reply_markup\": {{ $('Outbound Sender Webhook').item.json.body.telegram_reply_markup ? JSON.stringify($('Outbound Sender Webhook').item.json.body.telegram_reply_markup) : '{}' }}\n}",
+        "options": {}
+      },
+      "id": "send-telegram",
+      "name": "Send Telegram Message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        900,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.FASTAPI_BASE_URL }}/send-bot-message",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "session_id",
+              "value": "={{ $('Outbound Sender Webhook').item.json.body.session_id }}"
+            },
+            {
+              "name": "message",
+              "value": "={{ $('Outbound Sender Webhook').item.json.body.bot_response }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "send-web",
+      "name": "Send Web Message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        900,
+        600
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "merge-responses",
+      "name": "Merge Responses",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true, \"delivered\": true } }}"
+      },
+      "id": "respond",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        400
+      ]
+    }
+  ],
+  "connections": {
+    "Outbound Sender Webhook": {
+      "main": [
+        [
+          {
+            "node": "Log Bot Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Bot Message": {
+      "main": [
+        [
+          {
+            "node": "Route by Channel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route by Channel": {
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Telegram Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Web Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send WhatsApp Message": {
+      "main": [
+        [
+          {
+            "node": "Merge Responses",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Telegram Message": {
+      "main": [
+        [
+          {
+            "node": "Merge Responses",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Send Web Message": {
+      "main": [
+        [
+          {
+            "node": "Merge Responses",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge Responses": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

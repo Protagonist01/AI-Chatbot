@@ -1,0 +1,358 @@
+# BILLING KNOWLEDGE BASE
+
+## Overview
+Urban Threads accepts multiple payment methods and provides detailed billing information for all transactions. This guide covers payment processing, invoices, subscriptions, and billing inquiries.
+
+## Accepted Payment Methods
+
+### Credit & Debit Cards
+**Supported:**
+- Visa, Mastercard, American Express, Discover
+- Debit cards with Visa/MC logo
+- Prepaid cards (must be Registered)
+
+**Processing:**
+- Charged when order ships
+- Authorization hold placed at checkout
+- Hold released if order cancelled
+- Secure encrypted processing
+
+### Digital Wallets
+- **PayPal:** Instant processing
+- **Apple Pay:** iOS devices only
+- **Google Pay:** Android and web
+- **Shop Pay:** Fast checkout for returning customers
+
+### Other Methods
+- **Amazon Pay:** Link Amazon account
+- **Afterpay/Klarna:** Buy now, pay later (4 installments)
+- **Cryptocurrency:** Bitcoin, Ethereum (beta)
+- **Bank Transfer:** For orders over $1000
+- **Purchase Orders:** Business accounts only
+
+### Gift Cards & Store Credit
+- Can be combined with other payment methods
+- No expiration date
+- Balance never expires
+- Check balance online anytime
+
+## Payment Processing
+
+### When Charged
+- **Pre-orders:** When item ships, not at checkout
+- **Standard orders:** Within 24 hours of order
+- **Subscription:** On renewal date automatically
+- **Partial shipments:** Charged as items ship
+
+### Authorization vs. Charge
+- **Authorization:** Verifies funds available
+- **Charge:** Actual transaction processed
+- **Hold period:** Up to 7 days if order delayed
+- **Release:** Automatic if order cancelled
+
+### Payment Declined
+
+**Common Reasons:**
+- Insufficient funds
+- Incorrect card details
+- Billing address mismatch
+- Bank fraud protection
+- Expired card
+- Daily limit exceeded
+
+**Solutions:**
+1. Verify card details entered correctly
+2. Check billing address matches bank records
+3. Contact your bank to authorize transaction
+4. Try alternative payment method
+5. Contact support if persists
+
+## Billing Statements
+
+### Invoice Access
+- Emailed immediately after order ships
+- Download PDF from account dashboard
+- Includes itemized list of purchases
+- Shows tax breakdown
+- Contains order and tracking numbers
+
+### Invoice Contents
+- Order number and date
+- Billing and shipping addresses
+- Item names, SKUs, quantities
+- Individual and total prices
+- Shipping costs
+- Tax amounts
+- Payment method (last 4 digits)
+- Subtotals and grand total
+
+### VAT/Tax Invoices (International)
+- VAT number included if provided
+- Tax breakdown by jurisdiction
+- Customs declaration value
+- Exportation certificate available on request
+
+## Subscriptions & Recurring Billing
+
+### Subscription Types
+**Premium Membership:**
+- **$9.99/month** or **$99/year** (save 17%)
+- Free shipping on all orders
+- Exclusive member discounts
+- Early access to sales
+- Auto-renews until cancelled
+
+**Auto-Replenish:**
+- Schedule regular deliveries
+- 5% discount on auto-orders
+- Modify or skip anytime
+- Cancel anytime, no fees
+
+### Managing Subscriptions
+
+**To view/modify:**
+1. Log into account
+2. Navigate to "Subscriptions"
+3. View next billing date and amount
+4. Update payment method
+5. Change delivery frequency
+6. Cancel or pause subscription
+
+### Billing Cycle
+- Billed on same date each month/year
+- Email reminder 3days before charge
+- Receipt sent upon successful payment
+- Failed payment: 3 retry attempts over 7 days
+
+### Subscription Cancellation
+- Cancel anytime before next billing date
+- No cancellation fees
+- Access continues until end of current period
+- Auto-replenish orders: No further deliveries
+
+## Taxes & Fees
+
+### Sales Tax
+- Calculated based on shipping address
+- Varies by state/country
+- Shown at checkout before payment
+- Compliant with state internet sales tax laws
+- Tax exempt? Upload certificate to account
+
+### International Fees
+**Duties & Import Taxes:**
+- Customer responsibility
+- Varies by country and item value
+- Not included in checkout price
+- Separate from Urban Threads payment
+- Customs calculator available online
+
+**Currency Conversion:**
+- Automatic at current exchange rate
+- May include small foreign transaction fee from your bank
+- Rate locked at time of order
+- Billed in your local currency
+
+### Shipping Fees
+- Calculated by weight and destination
+- Free on orders $50+ (standard shipping)
+- Expedited shipping: Additional cost
+- International: Starts at $19.99
+
+## Payment Security
+
+### Security Measures
+- **PCI DSS Compliant:** Highest security standard
+- **SSL Encryption:** All transactions encrypted
+- **Tokenization:** Card numbers never stored fully
+- **3D Secure:** Additional verification for cards
+- **Fraud Detection:** AI-powered monitoring
+
+### What We Store
+- **Encrypted:** Last 4 digits of card
+- **Billing address:** For tax calculation
+- **Email:** Order confirmation
+- **NOT stored:** Full card number, CVV
+
+### Unauthorized Charges
+**If you see fraudulent charge:**
+1. Contact your bank immediately
+2. Report to support@urbanthreads.com
+3. Change account password
+4. Review account order history
+5. File dispute with payment provider
+
+## Refunds & Credits
+
+### Refund Timeline
+- **Processed:** 1-2 business days after return received
+- **Bank posting:** 5-7 additional business days
+- **Total time:** Usually 7-10 business days
+- **Store credit:** Immediate upon processing
+
+### Partial Refunds
+- Returned some items from order
+- Restocking fee applied
+- Return shipping deducted
+- Adjustment for promotion that no longer applies
+
+### Failed Refunds
+**Reasons:**
+- Card expired or closed
+- Account closed
+- Bank rejected deposit
+
+**Resolution:**
+- Store credit issued automatically
+- Contact us to update payment info
+- Reissue refund to valid method
+
+## Billing Disputes
+
+### Disputing a Charge
+**Process:**
+1. Contact us first: billing@urbanthreads.com
+2. Include order number and specifics
+3. We investigate within 3 business days
+4. Resolution or explanation provided
+5. If unresolved, file with credit card company
+
+### Common Disputes
+- Duplicate charges
+- Wrong amount charged
+- Charged for cancelled order
+- Not received but charged
+- Quality issue not resolved
+
+### Chargeback Process
+- Last resort after working with us
+- File with your credit card company
+- Provide documentation
+- Can take 60-90 days resolution
+- Account may be restricted during investigation
+
+## Payment Plans
+
+### Buy Now, Pay Later (BNPL)
+
+**Afterpay:**
+- Orders $35-$1000
+- 4 interest-free payments
+- Every 2 weeks
+- No credit check
+- Late fees if missed payment
+
+**Klarna:**
+- Pay in 30 days or 4 payments
+- Orders $50+
+- Soft credit check
+- Manage through Klarna app
+
+### Installment Terms
+- No impact on credit if paid on time
+- Auto-debit from linked account
+- Email reminders before each payment
+- Early payoff available with no penalty
+
+## Business/Corporate Billing
+
+### Net Terms
+Available for verified businesses:
+- **Net 15, 30, or 60 options**
+- Credit application required
+- Minimum $2000 credit limit
+- Invoice sent via email
+- Pay by check or ACH
+
+### Purchase Orders
+- Email PO to corporate@urbanthreads.com
+- Include PO number in order notes
+- Invoice will reference PO number
+- Payment terms as per agreement
+
+### Bulk Discounts
+- Tiered pricing for volume orders
+- Custom quotes for 50+ units
+- Flexible payment terms
+- Dedicated account manager
+
+## Price Adjustments
+
+### Price Match
+- Found lower price within 14 days?
+- Contact us with proof
+- We'll refund the difference
+- Applies to identical items only
+- Excludes third-party sellers
+
+### Post-Purchase Sale
+- Item went on sale within 7 days of your purchase
+- Request price adjustment
+- Credited as store credit
+- One adjustment per item
+- Premium members: 14-day window
+
+## Account Balance & Credits
+
+### Viewing Balance
+- Log into account dashboard
+- "Wallet" or "Credits" section
+- Shows available credit
+- Lists credit history
+- Expiration dates (if any)
+
+### Credits Never Expire
+- Store credit from returns
+- Gift card balance
+- Promotional credits
+- Referral bonuses
+- Settlement credits
+
+### Using Credits
+- Applied automatically at checkout
+- Can choose not to use (save for later)
+- Combinable with all promotions
+- Transferable to another account
+
+## Common Questions
+
+Q: Why was I charged twice?
+A: Likely an authorization hold + actual charge. Hold will drop in 3-7 days.
+
+Q: Can I split payment between two cards?
+A: Not directly, but can use gift card + credit card combination.
+
+Q: When will my refund arrive?
+A: 7-10 business days from when we process the return.
+
+Q: Can I get an invoice before paying?
+A: Business accounts yes, personal accounts invoiced after order ships.
+
+Q: How do I update my payment method for subscription?
+A: Account > Subscriptions > Update Payment Method.
+
+Q: What if my payment method expires?
+A: Update in account settings. We'll email reminder before subscription renewal.
+
+Q: Can I pay with multiple gift cards?
+A: Yes, apply up to 5 gift cards per order.
+
+Q: Are there foreign transaction fees?
+A: Not from us, but your bank may charge their own fee.
+
+## Contact Billing Support
+
+- **Email:** billing@urbanthreads.com
+- **Phone:** 1-800-THREADS option 4
+- **Live Chat:** urbanthreads.com/billing/help
+- **Hours:** Mon-Fri 8AM-8PM, Sat-Sun 10AM-6PM EST
+
+**Include in your message:**
+- Order number or transaction ID
+- Date of charge
+- Amount charged
+- Last 4 digits of payment method
+- Detailed description of issue
+- Screenshots if helpful
+
+Last Updated: January 2025

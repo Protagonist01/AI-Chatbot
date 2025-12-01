@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: ai-support-n8n
+    env: docker
+    plan: starter
+    healthCheckPath: /healthz
+    envVars:
+      - key: N8N_BASIC_AUTH_ACTIVE
+        value: true
+      - key: N8N_BASIC_AUTH_USER
+        value: admin
+      - key: N8N_BASIC_AUTH_PASSWORD
+        generateValue: true
+      - key: N8N_ENCRYPTION_KEY
+        generateValue: true
+      - key: POSTGRES_HOST
+        sync: false
+      - key: POSTGRES_DB
+        value: postgres
+      - key: POSTGRES_USER
+        value: postgres
+      - key: POSTGRES_PASSWORD
+        sync: false

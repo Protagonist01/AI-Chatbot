@@ -1,0 +1,191 @@
+{
+  "name": "Escalation Handler",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "escalation-handler",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "escalation-webhook",
+      "name": "Escalation Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ],
+      "webhookId": "escalation-handler"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "sessions",
+          "mode": "list",
+          "cachedResultName": "sessions"
+        },
+        "updateKey": "session_id",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "status": "escalated",
+            "escalation_reason": "={{ $json.body.escalation_reason }}",
+            "summary": "={{ $json.body.conversation_summary }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "escalation_reason",
+              "displayName": "escalation_reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ]
+        }
+      },
+      "id": "update-session",
+      "name": "Update Session Status",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2,
+      "position": [
+        460,
+        300
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "supabase-postgres",
+          "name": "Supabase PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.FASTAPI_BASE_URL }}/escalations",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "session_id",
+              "value": "={{ $json.session_id }}"
+            },
+            {
+              "name": "user_id",
+              "value": "={{ $('Escalation Webhook').item.json.body.user_id }}"
+            },
+            {
+              "name": "channel",
+              "value": "={{ $('Escalation Webhook').item.json.body.channel }}"
+            },
+            {
+              "name": "category",
+              "value": "={{ $('Escalation Webhook').item.json.body.domain }}"
+            },
+            {
+              "name": "reason",
+              "value": "={{ $('Escalation Webhook').item.json.body.escalation_reason }}"
+            },
+            {
+              "name": "conversation_summary",
+              "value": "={{ $('Escalation Webhook').item.json.body.conversation_summary }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "notify-server",
+      "name": "Notify Server",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true, \"message\": \"Escalation processed\" } }}"
+      },
+      "id": "respond",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        900,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Escalation Webhook": {
+      "main": [
+        [
+          {
+            "node": "Update Session Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Session Status": {
+      "main": [
+        [
+          {
+            "node": "Notify Server",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notify Server": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

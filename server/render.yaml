@@ -1,0 +1,31 @@
+services:
+  # FastAPI Backend
+  - type: web
+    name: ai-support-api
+    env: python
+    region: oregon
+    plan: starter
+    buildCommand: pip install poetry && poetry install
+    startCommand: poetry run uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: API_SECRET_KEY
+        generateValue: true
+      - key: API_HOST
+        value: 0.0.0.0
+      - key: API_PORT
+        fromGroup: PORT
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
+      - key: N8N_WEBHOOK_BASE_URL
+        sync: false
+      - key: N8N_AGENT_MESSAGE_WEBHOOK
+        value: agent-console-bridge
+      - key: N8N_TAKEOVER_WEBHOOK
+        value: human-takeover-trigger
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ALLOWED_ORIGINS
+        value: "*"
+    healthCheckPath: /health
